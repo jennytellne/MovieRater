@@ -6,8 +6,8 @@
 //
 
 struct OMDBSearchResponseData: Codable {
-    let Response: Bool
-    let Search: [OMDBSearchData]
+    let Response: String
+    let Search: [OMDBSearchData]?
     let totalResults: String?
     let Error: String?
 }

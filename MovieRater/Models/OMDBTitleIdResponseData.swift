@@ -25,10 +25,10 @@ struct OMDBTitleIdResponseData: Codable {
     let imdbRating: String
     let imdbVotes: String
     let imdbId: String
-    let `Type`: OMDBType
+    let `Type`: String
     let DVD: String
     let BoxOffice: String
     let Production: String
     let Website: String
-    let Response: Bool
+    let Response: String
 }

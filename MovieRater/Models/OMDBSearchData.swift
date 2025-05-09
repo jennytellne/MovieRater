@@ -9,6 +9,6 @@ struct OMDBSearchData: Codable {
     let Title: String
     let Year: String
     let imdbID: String
-    let `Type`: OMDBType
+    let `Type`: String
     let Poster: String
 }
