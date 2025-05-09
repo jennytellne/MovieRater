@@ -12,23 +12,57 @@ struct OMDBTitleIdResponseData: Codable {
     let Released: String
     let Runtime: String
     let Genre: String
-    let Director: String
-    let Writer: String
     let Actors: String
     let Plot: String
-    let Language: String
-    let Country: String
-    let Awards: String
     let Poster: String
-    let Ratings: [OMDBRating]
-    let Metascore: String
     let imdbRating: String
-    let imdbVotes: String
-    let imdbId: String
+    let imdbID: String
     let `Type`: String
-    let DVD: String
-    let BoxOffice: String
-    let Production: String
-    let Website: String
     let Response: String
+    
+    init() {
+        Title = ""
+        Year = ""
+        Rated = ""
+        Released = ""
+        Runtime = ""
+        Genre = ""
+        Actors = ""
+        Plot = ""
+        Poster = ""
+        imdbRating = ""
+        imdbID = ""
+        `Type` = ""
+        Response = ""
+    }
+    
+    init(
+        Title: String,
+        Year: String,
+        Rated: String,
+        Released: String,
+        Runtime: String,
+        Genre: String,
+        Actors: String,
+        Plot: String,
+        Poster: String,
+        imdbRating: String,
+        imdbID: String,
+        `Type`: String,
+        Response: String
+    ) {
+        self.Title = Title
+        self.Year = Year
+        self.Rated = Rated
+        self.Released = Released
+        self.Runtime = Runtime
+        self.Genre = Genre
+        self.Actors = Actors
+        self.Plot = Plot
+        self.Poster = Poster
+        self.imdbRating = imdbRating
+        self.imdbID = imdbID
+        self.`Type` = `Type`
+        self.Response = Response
+    }
 }

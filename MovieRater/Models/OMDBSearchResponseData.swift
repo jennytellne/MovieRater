@@ -10,4 +10,18 @@ struct OMDBSearchResponseData: Codable {
     let Search: [OMDBSearchData]?
     let totalResults: String?
     let Error: String?
+    
+    init() {
+        Response = ""
+        Search = []
+        totalResults = ""
+        Error = nil
+    }
+    
+    init(Response: String, Search: [OMDBSearchData]?, totalResults: String?, Error: String?) {
+        self.Response = Response
+        self.Search = Search
+        self.totalResults = totalResults
+        self.Error = Error
+    }
 }

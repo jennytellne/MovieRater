@@ -9,53 +9,80 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
-
+    @State private var searchResults: OMDBSearchResponseData = OMDBSearchResponseData()
+    @State private var searchText: String = ""
+    @State private var isLoading: Bool = false
+    
+    private let omdbService = OMDBService()
+    
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-                    }
+        NavigationStack {
+            Text("Movie Rater")
+                .font(.title)
+                .padding(.top, 20)
+                .padding(.bottom, 40)
+            
+            Text("Search for a movie or series:")
+            HStack {
+                TextField("Test", text: $searchText)
+                    .padding(.vertical, 5)
+                    .padding(.horizontal, 10)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 5)
+                            .stroke(Color.black, lineWidth: 1)
+                    )
+                    
+                AsyncButton {
+                    await fetchData()
+                } label: {
+                    Text("Search")
                 }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-        } detail: {
-            Text("Select an item")
-        }
-    }
+                .padding(.vertical, 6)
+                .padding(.horizontal, 10)
+                .background(Color.black)
+                .foregroundStyle(Color.white)
+                .cornerRadius(5)
 
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
             }
+            .padding(.horizontal, 10)
+            .padding(.bottom, 10)
+            
+            Spacer()
+            
+            if isLoading {
+                ProgressView()
+            } else {
+                List {
+                    ForEach(searchResults.Search ?? [], id: \.imdbID) { searchData in
+                        NavigationLink {
+                            MediaDetailsView(searchData: searchData)
+                        } label: {
+                            MediaListView(searchData: searchData)
+                        }
+                    }
+                    // TODO: Add infinite scroll, fetch next page
+                }
+                .scrollContentBackground(.hidden)
+            }
+ 
+            Spacer()
+            
         }
+        .padding(.horizontal, 10)
+    }
+    
+    private func fetchData() async {
+        isLoading = true
+        do {
+            let responseData = try await omdbService.getBySearch(searchText)
+            searchResults = responseData
+        } catch {
+            print("Error: \(error.localizedDescription)")
+        }
+        isLoading = false
     }
 }
 
 #Preview {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
 }
