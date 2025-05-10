@@ -55,7 +55,7 @@ struct ContentView: View {
                 List {
                     ForEach(searchResults.Search ?? [], id: \.imdbID) { searchData in
                         NavigationLink {
-                            MediaDetailsView(searchData: searchData)
+                            MediaDetailsView(imdbID: searchData.imdbID)
                         } label: {
                             MediaListView(searchData: searchData)
                         }

@@ -8,28 +8,80 @@
 import SwiftUI
 
 struct MediaDetailsView: View {
-    let searchData: OMDBSearchData
+    let imdbID: String
+    
+    @State private var isLoading: Bool = false
+    @State private var media: OMDBTitleIdResponseData = OMDBTitleIdResponseData()
+    
+    private let omdbService = OMDBService()
+
     var body: some View {
-        ScrollView {
-            Text(searchData.Title)
-                .font(.title)
-            AsyncImage(url: URL(string: searchData.Poster)) { image in
-                image.resizable()
-                    .aspectRatio(contentMode: .fit)
-            } placeholder: {
-                Color.purple
+        VStack(alignment: .center) {
+            ScrollView {
+                Text(media.Title)
+                    .font(.title)
+                HStack {
+                    Text(media.Type)
+                    HorizontalDivider()
+                    Text(media.Year)
+                    HorizontalDivider()
+                    Text(media.Rated)
+                    HorizontalDivider()
+                    Text(media.Runtime)
+                }
+                .font(.subheadline)
+                .foregroundStyle(Color.gray)
+                
+                AsyncImage(url: URL(string: media.Poster)) { image in
+                    image.resizable()
+                        .aspectRatio(contentMode: .fit)
+                } placeholder: {
+                    Color.purple
+                }
+                .frame(height: 400)
+                .frame(maxWidth: .infinity)
+                .clipShape(.rect(cornerRadius: 10))
+                .padding(.vertical)
+                
+                Text(media.Plot)
+                
+                Spacer()
             }
-            .frame(height: 400)
-            .frame(maxWidth: .infinity)
-            .clipShape(.rect(cornerRadius: 10))
-            .padding()
+            Spacer ()
             
-            Spacer()
+            Button {
+                // Ratings sheet
+            } label: {
+                Text("Rate \(media.Type)")
+                    .frame(alignment: .center)
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 20)
+                    .background(Color.black)
+                    .foregroundStyle(Color.white)
+                    .cornerRadius(5)
+            }
+            
+
         }
         .padding(.top)
+        .padding(.horizontal, 20)
+        .task {
+            await fetchData()
+        }
+    }
+    
+    private func fetchData() async {
+        isLoading = true
+        do {
+            let responseData = try await omdbService.getById(imdbID)
+            media = responseData
+        } catch {
+            print("Error: \(error.localizedDescription)")
+        }
+        isLoading = false
     }
 }
 
 #Preview {
-    MediaDetailsView(searchData: OMDBSearchData(Title: "Test", Year: "2016", imdbID: "kfsdlfkns", Type: "movie", Poster: ""))
+    MediaDetailsView(imdbID: "tt1517268")
 }
