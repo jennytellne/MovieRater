@@ -25,6 +25,7 @@ struct MediaRatingsView: View {
                     }
                 }
                 .scrollContentBackground(.hidden)
+                .listStyle(.plain)
             } else {
                 VStack {
                     Text("No ratings yet")
@@ -32,6 +33,7 @@ struct MediaRatingsView: View {
                         .foregroundStyle(Color.primaryText)
                         .padding(.bottom)
                     Text("Look up movies and series that you have watched and give them a rating!")
+                        .foregroundStyle(Color.primaryText)
                         .multilineTextAlignment(.center)
                 }
                 .padding(.top, 40)

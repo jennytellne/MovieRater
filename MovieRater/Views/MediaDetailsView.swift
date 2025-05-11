@@ -33,7 +33,7 @@ struct MediaDetailsView: View {
                     Text(media.Runtime)
                 }
                 .font(.subheadline)
-                .foregroundStyle(Color.gray)
+                .foregroundStyle(Color.secondaryText)
                 
                 PosterImage(posterUrlString: media.Poster)
                 .frame(height: 400)
@@ -44,18 +44,21 @@ struct MediaDetailsView: View {
                 if let mediaRating {
                     Text("Your rating: ")
                         .font(.caption)
-                        .foregroundStyle(Color.gray)
+                        .foregroundStyle(Color.secondaryText)
                         .padding(.bottom, 5)
                     RatingStars(rating: mediaRating.rating)
-                    .padding(.bottom)
+                        .font(.title)
+                        .padding(.bottom)
                 } else {
                     Text("You have not rated this \(media.Type) yet")
                         .font(.caption)
-                        .foregroundStyle(Color.gray)
+                        .foregroundStyle(Color.secondaryText)
                         .padding(.bottom)
                 }
                 
                 Text(media.Plot)
+                    .foregroundStyle(Color.primaryText)
+                    .multilineTextAlignment(.center)
                 
                 Spacer()
             }

@@ -10,7 +10,7 @@ import SwiftUI
 struct HorizontalDivider: View {
     var body: some View {
         Text(" | ")
-            .foregroundStyle(Color.gray)
+            .foregroundStyle(Color.secondaryText)
     }
 }
 

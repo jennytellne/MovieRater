@@ -20,7 +20,9 @@ struct MediaRatingListItemView: View {
                 Text(mediaRating.title)
                     .font(.headline)
                     .fontWeight(.bold)
+                    .padding(.bottom, 2)
                 RatingStars(rating: mediaRating.rating)
+                    .font(.title2)
                 Spacer()
             }
             .padding(.leading, 5)

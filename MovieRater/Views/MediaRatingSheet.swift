@@ -32,7 +32,7 @@ struct MediaRatingSheet: View {
                         } else {
                             Image(systemName: "star")
                                 .font(.title)
-                                .foregroundStyle(Color.black)
+                                .foregroundStyle(Color.primaryText)
                         }
                         
                     }

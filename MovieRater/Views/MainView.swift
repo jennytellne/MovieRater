@@ -57,14 +57,16 @@ struct MainView: View {
                     if searchText != "" {
                         HStack {
                             Button {
-                                searchText = ""
-                                activeSearchText = ""
+                                clearSearch()
                             } label: {
-                                Image(systemName: "xmark.circle.fill")
-                                    .foregroundStyle(Color.appSecondary)
+                                ZStack {
+                                    Image(systemName: "xmark.circle.fill")
+                                        .foregroundStyle(Color.appSecondary)
+                                }
+                                .frame(width: 44, height: 44)
                             }
                         }
-                        .padding(.trailing, 15)
+                        .padding(.trailing, 5)
                         .frame(maxWidth: .infinity, alignment: .trailing)
                     }
                 }
@@ -73,15 +75,7 @@ struct MainView: View {
                 Spacer()
                 
                 if hasActiveSearch {
-                    List(searchResults.Search ?? [], id: \.self.imdbID) { searchData in
-                        NavigationLink {
-                            MediaDetailsView(imdbID: searchData.imdbID)
-                        } label: {
-                            MediaListItemView(searchData: searchData)
-                        }
-                        // TODO: Add infinite scroll, fetch next page
-                    }
-                    .scrollContentBackground(.hidden)
+                    MediaListView(results: searchResults.Search)
                 } else {
                         MediaRatingsView()
                 }
@@ -89,6 +83,7 @@ struct MainView: View {
             }
         }
         .padding(.horizontal, 10)
+        .tint(Color.accent)
     }
     
     private func fetchData() async {
@@ -100,6 +95,12 @@ struct MainView: View {
             print("Error: \(error.localizedDescription)")
         }
         isLoading = false
+    }
+    
+    private func clearSearch() {
+        searchText = ""
+        activeSearchText = ""
+        searchResults = OMDBSearchResponseData()
     }
 }
 

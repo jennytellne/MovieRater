@@ -16,7 +16,7 @@ struct PosterImage: View {
                 .aspectRatio(contentMode: .fill)
         } placeholder: {
             ZStack {
-                Color.gray
+                Color.secondaryText
                 Image(systemName: "exclamationmark.square.fill")
             }
         }

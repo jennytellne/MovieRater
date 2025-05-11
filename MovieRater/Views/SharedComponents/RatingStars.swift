@@ -14,12 +14,10 @@ struct RatingStars: View {
             ForEach((1...5), id: \.self) { number in
                 if number <= rating {
                     Image(systemName: "star.fill")
-                        .font(.title)
                         .foregroundStyle(Color.yellow)
                 } else {
                     Image(systemName: "star")
-                        .font(.title)
-                        .foregroundStyle(Color.black)
+                        .foregroundStyle(Color.primaryText)
                 }
             }
         }
