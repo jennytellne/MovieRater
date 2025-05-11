@@ -85,7 +85,10 @@ struct MainView: View {
         .padding(.horizontal, 10)
         .tint(Color.accent)
     }
-    
+}
+
+// TODO: MVVM
+extension MainView {
     private func fetchData() async {
         isLoading = true
         do {

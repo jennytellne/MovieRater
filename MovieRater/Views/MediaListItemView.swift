@@ -6,10 +6,17 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct MediaListItemView: View {
+    @Query private var mediaRatings: [MediaRating]
+
     let searchData: OMDBSearchData
+    
+    @State private var mediaRating: MediaRating?
+
     var body: some View {
+  
         HStack(alignment: .top) {
             PosterImage(posterUrlString: searchData.Poster)
                 .frame(width: 70, height: 120)
@@ -25,12 +32,27 @@ struct MediaListItemView: View {
                 Text(searchData.Year)
                     .font(.subheadline)
                 
+                if let mediaRating {
+                    RatingStars(rating: mediaRating.rating)
+                        .padding(.top, 2)
+                }
                 Spacer()
             }
             .padding(.leading, 5)
             .frame(height: 80)
             
             Spacer()
+        }
+        .task {
+            fetchMediaRating(for: searchData.imdbID)
+        }
+    }
+}
+
+extension MediaListItemView {
+    func fetchMediaRating(for imdbID: String) {
+        if let rating = mediaRatings.first(where: { $0.imdbID == imdbID }) {
+            mediaRating = rating
         }
     }
 }

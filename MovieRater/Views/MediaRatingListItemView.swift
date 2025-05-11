@@ -22,7 +22,6 @@ struct MediaRatingListItemView: View {
                     .fontWeight(.bold)
                     .padding(.bottom, 2)
                 RatingStars(rating: mediaRating.rating)
-                    .font(.title2)
                 Spacer()
             }
             .padding(.leading, 5)

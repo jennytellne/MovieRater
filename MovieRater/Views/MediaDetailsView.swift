@@ -68,7 +68,7 @@ struct MediaDetailsView: View {
         .padding(.top)
         .padding(.horizontal, 20)
         .task {
-            fetchMoiveRating(for: imdbID)
+            fetchMediaRating(for: imdbID)
             await fetchData()
         }
         .toolbar {
@@ -77,7 +77,7 @@ struct MediaDetailsView: View {
             }
         }
         .sheet(isPresented: $isPresentingRatingView, onDismiss: {
-            fetchMoiveRating(for: imdbID)
+            fetchMediaRating(for: imdbID)
         }, content: {
             NavigationStack {
                 MediaRatingSheet(imdbID: imdbID, title: media.Title, poster: media.Poster, currentRating: $mediaRating)
@@ -100,9 +100,8 @@ extension MediaDetailsView {
         isLoading = false
     }
     
-    func fetchMoiveRating(for imdbID: String) {
+    func fetchMediaRating(for imdbID: String) {
         if let rating = mediaRatings.first(where: { $0.imdbID == imdbID }) {
-            print("Rating: \(rating.rating)")
             mediaRating = rating
         }
     }
