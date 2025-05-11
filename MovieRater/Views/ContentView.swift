@@ -52,13 +52,11 @@ struct ContentView: View {
             if isLoading {
                 ProgressView()
             } else {
-                List {
-                    ForEach(searchResults.Search ?? [], id: \.imdbID) { searchData in
-                        NavigationLink {
-                            MediaDetailsView(imdbID: searchData.imdbID)
-                        } label: {
-                            MediaListView(searchData: searchData)
-                        }
+                List(searchResults.Search ?? [], id: \.self.imdbID) { searchData in
+                    NavigationLink {
+                        MediaDetailsView(imdbID: searchData.imdbID)
+                    } label: {
+                        MediaListView(searchData: searchData)
                     }
                     // TODO: Add infinite scroll, fetch next page
                 }
