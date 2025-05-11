@@ -35,12 +35,7 @@ struct MediaDetailsView: View {
                 .font(.subheadline)
                 .foregroundStyle(Color.gray)
                 
-                AsyncImage(url: URL(string: media.Poster)) { image in
-                    image.resizable()
-                        .aspectRatio(contentMode: .fit)
-                } placeholder: {
-                    Color.purple
-                }
+                PosterImage(posterUrlString: media.Poster)
                 .frame(height: 400)
                 .frame(maxWidth: .infinity)
                 .clipShape(.rect(cornerRadius: 10))
@@ -51,19 +46,7 @@ struct MediaDetailsView: View {
                         .font(.caption)
                         .foregroundStyle(Color.gray)
                         .padding(.bottom, 5)
-                    HStack {
-                        ForEach((1...5), id: \.self) { number in
-                            if number <= mediaRating.rating {
-                                Image(systemName: "star.fill")
-                                    .font(.title)
-                                    .foregroundStyle(Color.yellow)
-                            } else {
-                                Image(systemName: "star")
-                                    .font(.title)
-                                    .foregroundStyle(Color.black)
-                            }
-                        }
-                    }
+                    RatingStars(rating: mediaRating.rating)
                     .padding(.bottom)
                 } else {
                     Text("You have not rated this \(media.Type) yet")

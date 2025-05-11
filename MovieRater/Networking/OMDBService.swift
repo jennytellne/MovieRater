@@ -36,7 +36,7 @@ class OMDBService {
     }
     
     func getById(_ id: String) async throws -> OMDBTitleIdResponseData {
-        guard let url = URL(string: baseUrlString + "apiKey=\(apiKey)&i=\(id)") else {
+        guard let url = URL(string: baseUrlString + "apiKey=\(apiKey)&i=\(id)&plot=full") else {
             print("Error: invalid url")
             throw Errors.invalidUrl
         }

@@ -20,7 +20,25 @@ struct ContentView: View {
             Text("Movie Rater")
                 .font(.title)
                 .padding(.top, 20)
-                .padding(.bottom, 40)
+                .padding(.bottom, 10)
+            
+            Form {
+                NavigationLink {
+                    NavigationStack {
+                        MediaRatingsView()
+                    }
+                    .navigationTitle("Ratings")
+                    .toolbarTitleDisplayMode(.large)
+                    
+                } label: {
+                    Text("Your ratings")
+                }
+                .listRowBackground(Color.clear)
+            }
+            .scrollContentBackground(.hidden)
+            .frame(height: 120)
+
+            Spacer()
             
             Text("Search for a movie or series:")
             HStack {
@@ -56,7 +74,7 @@ struct ContentView: View {
                     NavigationLink {
                         MediaDetailsView(imdbID: searchData.imdbID)
                     } label: {
-                        MediaListView(searchData: searchData)
+                        MediaListItemView(searchData: searchData)
                     }
                     // TODO: Add infinite scroll, fetch next page
                 }

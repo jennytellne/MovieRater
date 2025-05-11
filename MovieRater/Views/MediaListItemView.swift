@@ -1,5 +1,5 @@
 //
-//  MediaListView.swift
+//  MediaListItemView.swift
 //  MovieRater
 //
 //  Created by Jenny Tellne on 2025-05-09.
@@ -7,18 +7,13 @@
 
 import SwiftUI
 
-struct MediaListView: View {
+struct MediaListItemView: View {
     let searchData: OMDBSearchData
     var body: some View {
         HStack(alignment: .top) {
-            AsyncImage(url: URL(string: searchData.Poster)) { image in
-                image.resizable()
-                    .aspectRatio(contentMode: .fill)
-            } placeholder: {
-                Color.purple
-            }
-            .frame(width: 70, height: 120)
-            .clipShape(.rect(cornerRadius: 10))
+            PosterImage(posterUrlString: searchData.Poster)
+                .frame(width: 70, height: 120)
+                .clipShape(.rect(cornerRadius: 10))
             
             VStack(alignment: .leading) {
                 Text(searchData.Title)
@@ -41,5 +36,5 @@ struct MediaListView: View {
 }
 
 #Preview {
-    MediaListView(searchData: OMDBSearchData())
+    MediaListItemView(searchData: OMDBSearchData())
 }
