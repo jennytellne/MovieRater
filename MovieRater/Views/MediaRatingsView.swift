@@ -12,16 +12,34 @@ struct MediaRatingsView: View {
     @Query private var mediaRatings: [MediaRating]
 
     var body: some View {
-        VStack {
-            List(mediaRatings, id: \.self.imdbID) { rating in
-                NavigationLink {
-                    MediaDetailsView(imdbID: rating.imdbID)
-                } label: {
-                    MediaRatingListItemView(mediaRating: rating)
+        VStack(alignment: .leading) {
+            Text("My ratings")
+                .font(.caption)
+                .foregroundStyle(Color.primaryText)
+            if mediaRatings.count > 0 {
+                List(mediaRatings, id: \.self.imdbID) { rating in
+                    NavigationLink {
+                        MediaDetailsView(imdbID: rating.imdbID)
+                    } label: {
+                        MediaRatingListItemView(mediaRating: rating)
+                    }
                 }
+                .scrollContentBackground(.hidden)
+            } else {
+                VStack {
+                    Text("No ratings yet")
+                        .font(.title)
+                        .foregroundStyle(Color.primaryText)
+                        .padding(.bottom)
+                    Text("Look up movies and series that you have watched and give them a rating!")
+                        .multilineTextAlignment(.center)
+                }
+                .padding(.top, 40)
+                .frame(maxWidth: .infinity)
             }
-            .scrollContentBackground(.hidden)
+            Spacer()
         }
+        .padding(.horizontal)
     }
 }
 
