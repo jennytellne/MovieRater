@@ -12,7 +12,8 @@ class OMDBService {
     private let baseUrlString = "https://www.omdbapi.com/?"
     
     func getBySearch(_ search: String, page: Int) async throws -> OMDBSearchResponseData {
-        guard let url = URL(string: baseUrlString + "apiKey=\(apiKey)&s=\(search)&page=\(page)") else {
+        let cleanedSearch = search.replacingOccurrences(of: "&", with: "%26").replacingOccurrences(of: " ", with: "+")
+        guard let url = URL(string: baseUrlString + "apiKey=\(apiKey)&s=\(cleanedSearch)&page=\(page)") else {
             print("Error: invalid url")
             throw Errors.invalidUrl
         }
