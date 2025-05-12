@@ -11,8 +11,8 @@ class OMDBService {
     private let apiKey = APIKeys.OMBDApiKey
     private let baseUrlString = "https://www.omdbapi.com/?"
     
-    func getBySearch(_ search: String) async throws -> OMDBSearchResponseData {
-        guard let url = URL(string: baseUrlString + "apiKey=\(apiKey)&s=\(search)") else {
+    func getBySearch(_ search: String, page: Int) async throws -> OMDBSearchResponseData {
+        guard let url = URL(string: baseUrlString + "apiKey=\(apiKey)&s=\(search)&page=\(page)") else {
             print("Error: invalid url")
             throw Errors.invalidUrl
         }

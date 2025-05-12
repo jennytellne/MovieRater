@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct AnimatedSearchBar: View {
-    @Binding var searchResults: OMDBSearchResponseData
+    @Binding var searchResults: [OMDBSearchData]
     @Binding var searchText: String
     @Binding var activeSearchText: String
     @FocusState.Binding var isSearchFocused: Bool
     var hasActiveSearch: Bool
-
-    private let omdbService = OMDBService()
+    var fetchData: () async -> Void
+    var clearSearch: () -> Void
     
     var body: some View {
         HStack {
@@ -84,29 +84,13 @@ struct AnimatedSearchBar: View {
     }
 }
 
-extension AnimatedSearchBar {
-    private func fetchData() async {
-        do {
-            let responseData = try await omdbService.getBySearch(searchText)
-            searchResults = responseData
-        } catch {
-            print("Error: \(error.localizedDescription)")
-        }
-    }
-    
-    private func clearSearch() {
-        searchText = ""
-        activeSearchText = ""
-        searchResults = OMDBSearchResponseData()
-    }
-}
-
 #Preview {
-    @Previewable @State var searchResults = OMDBSearchResponseData()
+    @Previewable @State var searchResults: [OMDBSearchData] = []
     @Previewable @State var searchText = ""
     @Previewable @State var activeSearchText = ""
     @Previewable @FocusState var isSearchFocused
     @Previewable @State var hasActiveSearch = true
-
-    AnimatedSearchBar(searchResults: $searchResults, searchText: $searchText, activeSearchText: $activeSearchText, isSearchFocused: $isSearchFocused, hasActiveSearch: hasActiveSearch)
+    
+    AnimatedSearchBar(searchResults: $searchResults, searchText: $searchText, activeSearchText: $activeSearchText, isSearchFocused: $isSearchFocused, hasActiveSearch: hasActiveSearch) { } clearSearch: {
+    }
 }
