@@ -26,6 +26,7 @@ struct MediaListItemView: View {
                 Text(searchData.Title)
                     .font(.headline)
                     .fontWeight(.bold)
+                    .padding(.top, 2)
                 Text(searchData.Type)
                     .font(.subheadline)
                     .foregroundColor(Color.gray)
@@ -39,10 +40,10 @@ struct MediaListItemView: View {
                 Spacer()
             }
             .padding(.leading, 5)
-            .frame(height: 80)
             
             Spacer()
         }
+        .frame(minHeight: 120)
         .task {
             fetchMediaRating(for: searchData.imdbID)
         }
